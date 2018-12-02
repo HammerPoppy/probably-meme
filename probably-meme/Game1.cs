@@ -30,7 +30,6 @@ namespace probably_meme
             playerTexture = Content.Load<Texture2D>("player");
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
                 GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerTexture, 15);
-
             base.Initialize();
         }
         
@@ -38,7 +37,6 @@ namespace probably_meme
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             background = Content.Load<Texture2D>("terrain");
-
             spriteFont = Content.Load<SpriteFont>("Font");
 
             // TODO: use this.Content to load your game content here

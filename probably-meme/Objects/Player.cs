@@ -64,7 +64,14 @@ namespace probably_meme.Objects
 
         public void attack()
         {
-            weapon.attack();
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Space))
+                weapon.attack();
+        }
+
+        public Vector2 getPosition()
+        {
+            return coordinates;
         }
     }
 }

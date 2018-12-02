@@ -46,6 +46,7 @@
     <Compile Include="Objects\AObject.cs" />
     <Compile Include="Objects\Bullet.cs" />
     <Compile Include="Objects\Enemy.cs" />
+    <Compile Include="Objects\GameStaff.cs" />
     <Compile Include="Objects\Player.cs" />
     <Compile Include="Objects\Weapon.cs" />
     <Compile Include="Program.cs" />

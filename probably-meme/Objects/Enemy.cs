@@ -22,11 +22,8 @@ namespace probably_meme.Objects
 
         public override void move(Vector2 _point)
         {
-            vector.X = _point.X - coordinates.X;
-            vector.Y = _point.Y - coordinates.Y;
-            vector.X = vector.X / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
-            vector.Y = vector.Y / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
-
+            vector = GameStaff.countUnitVector(_point, coordinates);
+            
             coordinates.X += vector.X;
             coordinates.Y += vector.Y;
         }
@@ -39,6 +36,11 @@ namespace probably_meme.Objects
         double attack()
         {
             return (damage);
+        }
+
+        bool live()
+        {
+            return (HitPoints <= 0);
         }
     }
 }

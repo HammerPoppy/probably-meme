@@ -15,6 +15,7 @@ namespace probably_meme.Objects
         protected double        damage;
         protected Texture2D     texture;
         protected double        collisionRadius;
+        protected Vector2                 vector;
 
 
 
@@ -25,7 +26,7 @@ namespace probably_meme.Objects
             texture = _texture;
             collisionRadius = _collisionRadius;
         }
-        public abstract void move();
+        public abstract void move(Vector2 _point);
         public abstract void draw();
     }
 }

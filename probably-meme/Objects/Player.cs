@@ -12,10 +12,12 @@ namespace probably_meme.Objects
     class Player : AObject
     {
         private Weapon weapon;
+        private double hitPoints { get; set; }
 
-        Player(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
+        public Player(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
              : base(_vector, _damage, _texture, _collisionRadius) { }
-        public override void move()
+
+        public override void move(Vector2 _vector)
         {
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
@@ -26,17 +28,23 @@ namespace probably_meme.Objects
                 coordinates.Y++;
             else if (state.IsKeyUp(Keys.S) || state.IsKeyUp(Keys.Down))
                 coordinates.Y--;
-            weapon.move();
+            weapon.move(_vector);
         }
 
-        public override void draw()
-        {
-            
-        }
 
         public void changeWeapon(Weapon _weapon)
         {
             weapon = _weapon;
+        }
+
+        public override void draw()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void attack()
+        {
+            weapon.attack();
         }
     }
 }

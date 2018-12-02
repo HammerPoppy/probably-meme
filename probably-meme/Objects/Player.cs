@@ -20,13 +20,33 @@ namespace probably_meme.Objects
         public override void move(Vector2 _vector)
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
+            if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.W))
+            {
+                coordinates.X -= (float)(1 / Math.Sqrt(2));
+                coordinates.Y -= (float)(1 / Math.Sqrt(2));
+            }
+            else if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.D))
+            {
+                coordinates.X += (float)(1 / Math.Sqrt(2));
+                coordinates.Y -= (float)(1 / Math.Sqrt(2));
+            }
+            else if (state.IsKeyDown(Keys.D) && state.IsKeyDown(Keys.S))
+            {
+                coordinates.X += (float)(1 / Math.Sqrt(2));
+                coordinates.Y += (float)(1 / Math.Sqrt(2));
+            }
+            else if (state.IsKeyDown(Keys.S) && state.IsKeyDown(Keys.A))
+            {
+                coordinates.X -= (float)(1 / Math.Sqrt(2));
+                coordinates.Y += (float)(1 / Math.Sqrt(2));
+            }
+            else if (state.IsKeyDown(Keys.A))
                 coordinates.X--;
-            else if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
+            else if (state.IsKeyDown(Keys.D))
                 coordinates.X++;
-            else if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up))
+            else if (state.IsKeyDown(Keys.W))
                 coordinates.Y--;
-            else if (state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down))
+            else if (state.IsKeyDown(Keys.S))
                 coordinates.Y++;
             //weapon.move(_vector);
         }

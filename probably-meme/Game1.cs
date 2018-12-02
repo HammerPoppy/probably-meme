@@ -7,10 +7,16 @@ namespace probably_meme
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont spriteFont;
+
+        Texture2D background;
         
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
             Content.RootDirectory = "Content";
         }
         
@@ -24,6 +30,9 @@ namespace probably_meme
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            background = Content.Load<Texture2D>("terrain");
+
+            spriteFont = Content.Load<SpriteFont>("Font");
 
             // TODO: use this.Content to load your game content here
         }
@@ -43,9 +52,17 @@ namespace probably_meme
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
+            spriteBatch.End();
+
+            spriteBatch.Begin();
+
+            spriteBatch.DrawString(spriteFont, GraphicsDevice.PresentationParameters.Bounds.Width.ToString(), new Vector2(100, 100), Color.Yellow);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

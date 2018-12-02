@@ -46,11 +46,11 @@ namespace probably_meme.Objects
             else if (state.IsKeyDown(Keys.A))
                 coordinates.X -= speed;
             else if (state.IsKeyDown(Keys.D))
-                coordinates.X -= speed;
+                coordinates.X += speed;
             else if (state.IsKeyDown(Keys.W))
                 coordinates.Y -= speed;
             else if (state.IsKeyDown(Keys.S))
-                coordinates.Y -= speed;
+                coordinates.Y += speed;
             //weapon.move(_vector);
         }
 

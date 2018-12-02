@@ -7,6 +7,8 @@ namespace probably_meme
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        Texture2D background;
         
         public Game1()
         {
@@ -27,6 +29,7 @@ namespace probably_meme
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            background = Content.Load<Texture2D>("terrain");
 
             // TODO: use this.Content to load your game content here
         }
@@ -46,9 +49,14 @@ namespace probably_meme
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            Rectangle rec = new Rectangle(0, 0, 1920, 1080);
+            spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
+
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

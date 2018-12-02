@@ -10,8 +10,12 @@ namespace probably_meme
         SpriteBatch spriteBatch;
         SpriteFont spriteFont;
 
+        private AnimatedSprite animatedSprite;
+
         Texture2D background;
-        Texture2D playerTexture;
+        Texture2D playerVertTexture;
+        Texture2D playerLeftTexture;
+        Texture2D playerStandTexture;
 
         Player player;
         
@@ -27,9 +31,11 @@ namespace probably_meme
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            playerTexture = Content.Load<Texture2D>("player");
+            playerVertTexture = Content.Load<Texture2D>("player vertical");
+            playerLeftTexture = Content.Load<Texture2D>("player left");
+            playerStandTexture = Content.Load<Texture2D>("player");
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
-                GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerTexture, 15);
+                GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerLeftTexture, playerVertTexture, playerStandTexture, 15);
             base.Initialize();
         }
         
@@ -52,6 +58,7 @@ namespace probably_meme
 
             // TODO: Add your update logic here
             player.move(new Vector2(0, 0));
+            
 
             base.Update(gameTime);
         }
@@ -62,13 +69,11 @@ namespace probably_meme
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
-            player.draw(spriteBatch);
             spriteBatch.End();
+            player.draw(spriteBatch);
 
             spriteBatch.Begin();
-
             spriteBatch.DrawString(spriteFont, GraphicsDevice.PresentationParameters.Bounds.Width.ToString(), new Vector2(100, 100), Color.Yellow);
-
             spriteBatch.End();
 
             base.Draw(gameTime);

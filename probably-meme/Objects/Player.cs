@@ -28,40 +28,57 @@ namespace probably_meme.Objects
             goingVertical = new AnimatedSprite(textureVert, 2, 2);
             goingLeft = new AnimatedSprite(textureLeft, 2, 2);
             goingRight = new AnimatedSprite(textureLeft, 2, 2);
-            states = AnimationStates.Left;
+            states = AnimationStates.Standing;
         }
 
         public override void move(Vector2 mousePosition)
         {
             KeyboardState state = Keyboard.GetState();
+            states = AnimationStates.Standing;
             if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.W))
             {
                 coordinates.X -= (float)(speed / Math.Sqrt(2));
                 coordinates.Y -= (float)(speed / Math.Sqrt(2));
+                states = AnimationStates.Vertical;
             }
             else if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.D))
             {
                 coordinates.X += (float)(speed / Math.Sqrt(2));
                 coordinates.Y -= (float)(speed / Math.Sqrt(2));
+                states = AnimationStates.Vertical;
             }
             else if (state.IsKeyDown(Keys.D) && state.IsKeyDown(Keys.S))
             {
                 coordinates.X += (float)(speed / Math.Sqrt(2));
                 coordinates.Y += (float)(speed / Math.Sqrt(2));
+                states = AnimationStates.Vertical;
             }
             else if (state.IsKeyDown(Keys.S) && state.IsKeyDown(Keys.A))
             {
                 coordinates.X -= (float)(speed / Math.Sqrt(2));
                 coordinates.Y += (float)(speed / Math.Sqrt(2));
+                states = AnimationStates.Vertical;
             }
             else if (state.IsKeyDown(Keys.A))
+            {
                 coordinates.X -= speed;
+                states = AnimationStates.Left;
+            }
             else if (state.IsKeyDown(Keys.D))
-                coordinates.X -= speed;
+            {
+                coordinates.X += speed;
+                states = AnimationStates.Right;
+            }
             else if (state.IsKeyDown(Keys.W))
+            {
                 coordinates.Y -= speed;
+                states = AnimationStates.Vertical;
+            }
             else if (state.IsKeyDown(Keys.S))
-                coordinates.Y -= speed;
+            {
+                coordinates.Y += speed;
+                states = AnimationStates.Vertical;
+            }
             //weapon.move(_vector);
         }
 
@@ -102,6 +119,9 @@ namespace probably_meme.Objects
                 goingLeft.StopAnimation();
                 goingRight.StopAnimation();
                 goingVertical.StopAnimation();
+                goingLeft.Update();
+                goingLeft.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
+                        Color.White, false);
                 break;
             }
             

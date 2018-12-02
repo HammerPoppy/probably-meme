@@ -7,6 +7,7 @@ namespace probably_meme
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont spriteFont;
 
         Texture2D background;
         
@@ -31,6 +32,8 @@ namespace probably_meme
             spriteBatch = new SpriteBatch(GraphicsDevice);
             background = Content.Load<Texture2D>("terrain");
 
+            spriteFont = Content.Load<SpriteFont>("Font");
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -52,9 +55,12 @@ namespace probably_meme
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            Rectangle rec = new Rectangle(0, 0, 1920, 1080);
             spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
+            spriteBatch.End();
 
+            spriteBatch.Begin();
+
+            spriteBatch.DrawString(spriteFont, GraphicsDevice.PresentationParameters.Bounds.Width.ToString(), new Vector2(100, 100), Color.Yellow);
 
             spriteBatch.End();
 

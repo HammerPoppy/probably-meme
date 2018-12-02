@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace probably_meme.Objects
 {
@@ -15,12 +11,27 @@ namespace probably_meme.Objects
         private float speed;
         private double hitPoints { get; set; }
 
-        public Player(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
-             : base(_vector, _damage, _texture, _collisionRadius) {
-            speed = 1;
+        enum AnimationStates
+        {
+            Vertical,
+            Left,
+            Right,
+            Standing
+        }
+        AnimationStates states;
+
+        AnimatedSprite goingVertical, goingLeft, goingRight;
+
+        public Player(Vector2 _vector, double _damage, Texture2D textureLeft, Texture2D textureVert, Texture2D textureStanding, double _collisionRadius)
+             : base(_vector, _damage, textureStanding, _collisionRadius)
+        {
+            goingVertical = new AnimatedSprite(textureVert, 2, 2);
+            goingLeft = new AnimatedSprite(textureLeft, 2, 2);
+            goingRight = new AnimatedSprite(textureLeft, 2, 2);
+            states = AnimationStates.Left;
         }
 
-        public override void move(Vector2 _vector)
+        public override void move(Vector2 mousePosition)
         {
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.W))
@@ -66,7 +77,34 @@ namespace probably_meme.Objects
 
         public override void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height), Color.White);
+            //spriteBatch.Draw(texture, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height), Color.White);
+            switch (states)
+            {
+            case AnimationStates.Left:
+                goingLeft.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
+                    Color.White, false);
+                goingLeft.Update();
+                break;
+                    
+            case AnimationStates.Right:
+                goingRight.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
+                    Color.White, true);
+                goingRight.Update();
+                break;
+
+            case AnimationStates.Vertical:
+                goingVertical.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
+                    Color.White, false);
+                goingVertical.Update();
+                break;
+
+            case AnimationStates.Standing:
+                goingLeft.StopAnimation();
+                goingRight.StopAnimation();
+                goingVertical.StopAnimation();
+                break;
+            }
+            
         }
 
         public void attack()

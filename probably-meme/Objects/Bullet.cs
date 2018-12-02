@@ -9,13 +9,18 @@ using System.Threading.Tasks;
 
 namespace probably_meme.Objects
 {
-    class Weapon : AObject
+    class Bullet : AObject
     {
-        List<Bullet> bullets;
-        Texture2D bulletsTexture;
+        Bullet(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
+            : base(_vector, _damage, _texture, _collisionRadius)
+        {
+            MouseState state = Mouse.GetState();
+            vector.X = state.X - coordinates.X;
+            vector.Y = state.Y - coordinates.Y;
+            vector.X = vector.X / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
+            vector.Y = vector.Y / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
 
-        Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
-            : base(_vector, _damage, _texture, _collisionRadius) { }
+        }
 
         public override void draw()
         {
@@ -23,25 +28,11 @@ namespace probably_meme.Objects
         }
 
         public override void move(Vector2 _mouse_coordinates) { }
-
-        public void move ()
+        
+        public void move()
         {
-            MouseState state = Mouse.GetState();
-
-            vector.X = state.X - coordinates.X;
-            vector.Y = state.Y - coordinates.Y;
-            vector.X = vector.X / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
-            vector.Y = vector.Y / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
-        }
-
-        public void changeBulletsTexture(Texture2D _texture)
-        {
-            bulletsTexture = _texture;
-        }
-
-        public void attack()
-        {
-            bullets.Add(new Bullet(coordinates, damage, bulletsTexture, 0));
+            coordinates.X += vector.X;
+            coordinates.Y += vector.Y;
         }
     }
 }

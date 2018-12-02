@@ -11,14 +11,13 @@ namespace probably_meme.Objects
 {
     class Bullet : AObject
     {
-        public Bullet(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
+        public Bullet(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _speed)
             : base(_vector, _damage, _texture, _collisionRadius)
         {
             MouseState state = Mouse.GetState();
-            vector.X = state.X - coordinates.X;
-            vector.Y = state.Y - coordinates.Y;
-            vector.X = vector.X / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
-            vector.Y = vector.Y / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
+            vector = GameStaff.countUnitVector(new Vector2(state.X, state.Y), coordinates);
+            vector.X *= _speed;
+            vector.Y *= _speed;
         }
 
         public override void draw(SpriteBatch spriteBatch)
@@ -32,6 +31,16 @@ namespace probably_meme.Objects
         {
             coordinates.X += vector.X;
             coordinates.Y += vector.Y;
+        }
+
+        public Vector2 getPosition()
+        {
+            return coordinates;
+        }
+
+        public double getDamage()
+        {
+            return damage;
         }
     }
 }

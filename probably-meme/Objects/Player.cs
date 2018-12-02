@@ -8,6 +8,7 @@ namespace probably_meme.Objects
     class Player : AObject
     {
         private Weapon weapon;
+        private float speed;
         private double hitPoints { get; set; }
 
         enum AnimationStates
@@ -35,35 +36,39 @@ namespace probably_meme.Objects
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.W))
             {
-                coordinates.X -= (float)(1 / Math.Sqrt(2));
-                coordinates.Y -= (float)(1 / Math.Sqrt(2));
+                coordinates.X -= (float)(speed / Math.Sqrt(2));
+                coordinates.Y -= (float)(speed / Math.Sqrt(2));
             }
             else if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.D))
             {
-                coordinates.X += (float)(1 / Math.Sqrt(2));
-                coordinates.Y -= (float)(1 / Math.Sqrt(2));
+                coordinates.X += (float)(speed / Math.Sqrt(2));
+                coordinates.Y -= (float)(speed / Math.Sqrt(2));
             }
             else if (state.IsKeyDown(Keys.D) && state.IsKeyDown(Keys.S))
             {
-                coordinates.X += (float)(1 / Math.Sqrt(2));
-                coordinates.Y += (float)(1 / Math.Sqrt(2));
+                coordinates.X += (float)(speed / Math.Sqrt(2));
+                coordinates.Y += (float)(speed / Math.Sqrt(2));
             }
             else if (state.IsKeyDown(Keys.S) && state.IsKeyDown(Keys.A))
             {
-                coordinates.X -= (float)(1 / Math.Sqrt(2));
-                coordinates.Y += (float)(1 / Math.Sqrt(2));
+                coordinates.X -= (float)(speed / Math.Sqrt(2));
+                coordinates.Y += (float)(speed / Math.Sqrt(2));
             }
             else if (state.IsKeyDown(Keys.A))
-                coordinates.X--;
+                coordinates.X -= speed;
             else if (state.IsKeyDown(Keys.D))
-                coordinates.X++;
+                coordinates.X -= speed;
             else if (state.IsKeyDown(Keys.W))
-                coordinates.Y--;
+                coordinates.Y -= speed;
             else if (state.IsKeyDown(Keys.S))
-                coordinates.Y++;
+                coordinates.Y -= speed;
             //weapon.move(_vector);
         }
 
+        public void setSpeed(double _speed)
+        {
+            speed = (float)_speed;
+        }
 
         public void changeWeapon(Weapon _weapon)
         {
@@ -107,6 +112,11 @@ namespace probably_meme.Objects
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Space))
                 weapon.attack();
+        }
+
+        public double collision(Enemy enemy)
+        {
+            return weapon.collision(enemy);
         }
 
         public Vector2 getPosition()

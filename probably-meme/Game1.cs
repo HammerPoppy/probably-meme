@@ -36,6 +36,7 @@ namespace probably_meme
             playerStandTexture = Content.Load<Texture2D>("player");
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
                 GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerLeftTexture, playerVertTexture, playerStandTexture, 15);
+            player.setSpeed(2.0);
             base.Initialize();
         }
         

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using probably_meme.Objects;
 
 namespace probably_meme
 {
@@ -10,6 +11,9 @@ namespace probably_meme
         SpriteFont spriteFont;
 
         Texture2D background;
+        Texture2D playerTexture;
+
+        Player player;
         
         public Game1()
         {
@@ -23,6 +27,9 @@ namespace probably_meme
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            playerTexture = Content.Load<Texture2D>("player");
+            player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
+                GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerTexture, 15);
 
             base.Initialize();
         }
@@ -46,6 +53,7 @@ namespace probably_meme
         {
 
             // TODO: Add your update logic here
+            player.move(new Vector2(0, 0));
 
             base.Update(gameTime);
         }
@@ -56,6 +64,7 @@ namespace probably_meme
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
+            player.draw(spriteBatch);
             spriteBatch.End();
 
             spriteBatch.Begin();

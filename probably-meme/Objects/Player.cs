@@ -24,11 +24,11 @@ namespace probably_meme.Objects
                 coordinates.X--;
             else if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
                 coordinates.X++;
-            else if (state.IsKeyUp(Keys.W) || state.IsKeyDown(Keys.Up))
-                coordinates.Y++;
-            else if (state.IsKeyUp(Keys.S) || state.IsKeyUp(Keys.Down))
+            else if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up))
                 coordinates.Y--;
-            weapon.move(_vector);
+            else if (state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down))
+                coordinates.Y++;
+            //weapon.move(_vector);
         }
 
 
@@ -37,9 +37,9 @@ namespace probably_meme.Objects
             weapon = _weapon;
         }
 
-        public override void draw()
+        public override void draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Draw(texture, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height), Color.White);
         }
 
         public void attack()

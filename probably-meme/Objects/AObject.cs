@@ -27,6 +27,6 @@ namespace probably_meme.Objects
             collisionRadius = _collisionRadius;
         }
         public abstract void move(Vector2 _point);
-        public abstract void draw();
+        public abstract void draw(SpriteBatch spriteBatch);
     }
 }

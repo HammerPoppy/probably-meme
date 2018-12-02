@@ -17,7 +17,7 @@ namespace probably_meme.Objects
         Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
             : base(_vector, _damage, _texture, _collisionRadius) { }
 
-        public override void draw()
+        public override void draw(SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
         }

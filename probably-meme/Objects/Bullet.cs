@@ -21,7 +21,7 @@ namespace probably_meme.Objects
             vector.Y = vector.Y / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
         }
 
-        public override void draw()
+        public override void draw(SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
         }

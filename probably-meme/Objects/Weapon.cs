@@ -11,11 +11,14 @@ namespace probably_meme.Objects
 {
     class Weapon : AObject
     {
-        List<Bullet> bullets;
-        Texture2D bulletsTexture;
+        private List<Bullet> bullets;
+        private Texture2D bulletsTexture;
+        private float bulletsSpeed;
 
-        Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
-            : base(_vector, _damage, _texture, _collisionRadius) { }
+        Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _bulletsSpeed)
+            : base(_vector, _damage, _texture, _collisionRadius) {
+            bulletsSpeed = _bulletsSpeed;
+        }
 
         public override void draw(SpriteBatch spriteBatch)
         {
@@ -27,11 +30,7 @@ namespace probably_meme.Objects
         public void move ()
         {
             MouseState state = Mouse.GetState();
-
-            vector.X = state.X - coordinates.X;
-            vector.Y = state.Y - coordinates.Y;
-            vector.X = vector.X / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
-            vector.Y = vector.Y / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
+            vector = GameStaff.countUnitVector(new Vector2(state.X, state.Y), coordinates);
         }
 
         public void changeBulletsTexture(Texture2D _texture)
@@ -41,7 +40,26 @@ namespace probably_meme.Objects
 
         public void attack()
         {
-            bullets.Add(new Bullet(coordinates, damage, bulletsTexture, 0));
+            bullets.Add(new Bullet(coordinates, damage, bulletsTexture, 0, 1));
+        }
+
+        public double collision(Enemy enemy)
+        {
+            Vector2 bulletPosition;
+            double _damage = 0;
+            bullets.ForEach(delegate (Bullet bullet)
+            {
+                bulletPosition = bullet.getPosition();
+                if ((coordinates.X + collisionRadius >= bulletPosition.X) &&
+                    (coordinates.X - collisionRadius <= bulletPosition.X) &&
+                    (coordinates.Y + collisionRadius >= bulletPosition.Y) &&
+                    (coordinates.Y - collisionRadius <= bulletPosition.Y))
+                {
+                    bullets.Remove(bullet);
+                    _damage += damage;
+                }
+            });
+            return _damage;
         }
     }
 }

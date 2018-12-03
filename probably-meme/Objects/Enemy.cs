@@ -11,12 +11,12 @@ namespace probably_meme.Objects
     class Enemy : AObject
     {
         double HitPoints;
-        float speed;
+        double speed;
 
-        public Enemy(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, double _HitPoints)
+        public Enemy(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, double _HitPoints, double _speed)
             : base(_vector, _damage, _texture, _collisionRadius) {
             collisionRadius = _collisionRadius;
-            speed = 1;
+            speed = _speed;
             HitPoints = _HitPoints;
         }
 
@@ -35,8 +35,8 @@ namespace probably_meme.Objects
         public override void move(Vector2 _point)
         {
             vector = GameStaff.countUnitVector(_point, coordinates);
-            vector.X *= speed;
-            vector.Y *= speed;
+            vector.X *= (float)speed;
+            vector.Y *= (float)speed;
 
             coordinates.X += vector.X;
             coordinates.Y += vector.Y;

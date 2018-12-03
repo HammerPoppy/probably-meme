@@ -20,9 +20,10 @@ namespace probably_meme.Objects
 
         AnimatedSprite going;
 
-        public Player(Vector2 _vector, double _damage, Texture2D texture, double _collisionRadius)
+        public Player(Vector2 _vector, double _damage, Texture2D texture, double _collisionRadius, double _HitPoints)
              : base(_vector, _damage, texture, _collisionRadius)
         {
+            hitPoints = _HitPoints;
             going = new AnimatedSprite(texture, 3, 2);
             states = AnimationStates.Standing;
         }
@@ -131,6 +132,16 @@ namespace probably_meme.Objects
 
         public double collision(Enemy enemy)
         {
+            Vector2 enemyPosition = enemy.getPosition();
+
+            if ((enemyPosition.X + enemy.getCollisionRadius() >= coordinates.X) &&
+                    (enemyPosition.X <= coordinates.X) &&
+                    (enemyPosition.Y + enemy.getCollisionRadius() >= coordinates.Y) &&
+                    (enemyPosition.Y <= coordinates.Y))
+            {
+
+                hitPoints -= enemy.attack();
+            }
             return weapon.collision(enemy);
         }
 
@@ -142,6 +153,11 @@ namespace probably_meme.Objects
         public void getDamage(double _damage)
         {
             hitPoints -= _damage;
+        }
+
+        public bool isLive()
+        {
+            return (hitPoints > 0);
         }
     }
 }

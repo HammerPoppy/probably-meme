@@ -48,7 +48,7 @@ namespace probably_meme
             player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)4.0));
             player.weapon.changeBulletsTexture(bulletTexture);
             this.IsMouseVisible = true;
-            player.weapon.changeOrigin(new Vector2(-90, -50));
+            player.weapon.changeOrigin(new Vector2(50, 50));
             base.Initialize();
         }
         

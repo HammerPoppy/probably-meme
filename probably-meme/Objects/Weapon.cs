@@ -18,7 +18,6 @@ namespace probably_meme.Objects
         private int attackCooldown = 10;
         private Vector2 origin;
         double rotationAngle;
-        
 
         public Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _bulletsSpeed)
             : base(_vector, _damage, _texture, _collisionRadius) {
@@ -45,8 +44,8 @@ namespace probably_meme.Objects
         {
             spriteBatch.Begin();
             
-            spriteBatch.Draw(texture, new Rectangle((int)(coordinates.X + origin.X), (int)(coordinates.Y + origin.Y), texture.Width, texture.Height),
-                new Rectangle(0, 0, texture.Width, texture.Height), Color.White, (float)(rotationAngle), origin, SpriteEffects.None, (float)0);
+            spriteBatch.Draw(texture, new Rectangle((int)(coordinates.X - 5 + origin.X), (int)(coordinates.Y - 35 + origin.Y), texture.Width, texture.Height),
+                new Rectangle(0, 0, texture.Width, texture.Height), Color.White, (float)(rotationAngle /*+ (Math.PI * 0.5f)*/), origin, SpriteEffects.None, (float)0);
             bullets.ForEach(delegate (Bullet bullet)
             {
                 spriteBatch.Draw(bulletsTexture, bullet.getPosition(), Color.White);
@@ -59,11 +58,13 @@ namespace probably_meme.Objects
         public void move()
         {
             MouseState state = Mouse.GetState();
-            Vector2 oldVector = vector;
+            Vector2 mousePosition = new Vector2(state.X, state.Y);
             vector = GameStaff.countUnitVector(new Vector2(state.X, state.Y), 
                 new Vector2(coordinates.X, coordinates.Y));
 
-            rotationAngle = oldVector.X * vector.X + oldVector.Y * vector.Y;
+            //rotationAngle = oldVector.X * vector.X + oldVector.Y * vector.Y;
+            Vector2 direction = mousePosition - coordinates;
+            rotationAngle = (float)Math.Atan2(direction.Y, direction.X);
 
             bullets.ForEach(delegate (Bullet bullet)
             {

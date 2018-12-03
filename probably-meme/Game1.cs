@@ -63,7 +63,7 @@ namespace probably_meme
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            background = Content.Load<Texture2D>("terrain");
+            background = Content.Load<Texture2D>("terrain 2");
             spriteFont = Content.Load<SpriteFont>("Font");
 
             // TODO: use this.Content to load your game content here

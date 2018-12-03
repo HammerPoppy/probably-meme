@@ -20,6 +20,8 @@ namespace probably_meme
         Texture2D bulletTexture;
         Texture2D enemyTexture;
         Texture2D enemyTexture1;
+        Texture2D HBRed;
+        Texture2D HBFrame;
         int ms;
         
         double enemySpeed;
@@ -68,8 +70,8 @@ namespace probably_meme
             spriteBatch = new SpriteBatch(GraphicsDevice);
             background = Content.Load<Texture2D>("terrain 2");
             spriteFont = Content.Load<SpriteFont>("Font");
-
-            // TODO: use this.Content to load your game content here
+            HBRed = Content.Load<Texture2D>("HBRed");
+            HBFrame = Content.Load<Texture2D>("HBFrame");
         }
 
         protected override void UnloadContent()
@@ -136,13 +138,13 @@ namespace probably_meme
             });
             player.weapon.draw(spriteBatch);
             String time = gameTime.TotalGameTime.Minutes + ":" + gameTime.TotalGameTime.Seconds;
-            String health = player.hitPoints.ToString();
+            double health = player.hitPoints;
            
             spriteBatch.Begin();
             spriteBatch.DrawString(spriteFont, time, new Vector2(102, 105), Color.Black);
             spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.Red);
-            spriteBatch.DrawString(spriteFont, health, new Vector2(102, 155), Color.Black);
-            spriteBatch.DrawString(spriteFont, health, new Vector2(100, 150), Color.Red);
+            spriteBatch.Draw(HBFrame, new Rectangle(100, 175, HBFrame.Width, HBFrame.Height), Color.White);
+            spriteBatch.Draw(HBRed, new Rectangle(100, 175, (int)(HBRed.Width * (player.hitPoints / 20)), HBFrame.Height), new Rectangle(0, 0, (int)(HBRed.Width * (player.hitPoints / 20)), HBRed.Height), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

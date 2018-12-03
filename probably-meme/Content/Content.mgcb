@@ -54,7 +54,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:HBFrame.png
+/build:HBFrame.png;HBRed.png
 
 #begin HBRed.png
 /importer:TextureImporter
@@ -66,7 +66,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:HBRed.png
+/build:HBRed.png;HBFrame.png
 
 #begin New Piskel-1.png.png
 /importer:TextureImporter

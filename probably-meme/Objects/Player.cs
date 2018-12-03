@@ -94,7 +94,7 @@ namespace probably_meme.Objects
             switch (states)
             {
             case AnimationStates.Going:
-                going.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
+                going.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width / 2, texture.Height / 3),
                     Color.White, false);
                 going.Update();
                 break;
@@ -102,7 +102,7 @@ namespace probably_meme.Objects
             case AnimationStates.Standing:
                 going.StopAnimation();
                 going.Update();
-                going.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
+                going.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width / 2, texture.Height / 3),
                         Color.White, false);
                 break;
             }

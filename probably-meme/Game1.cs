@@ -132,8 +132,10 @@ namespace probably_meme
             String time = gameTime.TotalGameTime.Minutes + ":" + gameTime.TotalGameTime.Seconds;
             String health = player.hitPoints.ToString();
             spriteBatch.Begin();
-            spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.Black);
-            spriteBatch.DrawString(spriteFont, health, new Vector2(100, 150), Color.Black);
+            spriteBatch.DrawString(spriteFont, time, new Vector2(102, 105), Color.Black);
+            spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.Red);
+            spriteBatch.DrawString(spriteFont, health, new Vector2(102, 155), Color.Black);
+            spriteBatch.DrawString(spriteFont, health, new Vector2(100, 150), Color.Red);
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -48,8 +48,8 @@ namespace probably_meme
 
             weaponTexture = Content.Load<Texture2D>("ak-47");
             player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)2.0));
-            player.weapon.changeOrigin(new Vector2(-90, -50));
-
+            player.weapon.changeOrigin(new Vector2(0, 0));
+            this.IsMouseVisible = true;
             base.Initialize();
         }
         

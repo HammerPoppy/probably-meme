@@ -15,8 +15,8 @@ namespace probably_meme.Objects
             Vector2 vector;
             vector.X = point.X - coordinates.X;
             vector.Y = point.Y - coordinates.Y;
-            vector.X = vector.X / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
-            vector.Y = vector.Y / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
+            vector.X = vector.X / (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
+            vector.Y = vector.Y / (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
             return vector;
         }
 

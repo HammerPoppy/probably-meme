@@ -11,11 +11,13 @@ namespace probably_meme.Objects
     class Enemy : AObject
     {
         double HitPoints;
-        float speed;
+        double speed;
 
-        public Enemy(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
+        public Enemy(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, double _HitPoints, double _speed)
             : base(_vector, _damage, _texture, _collisionRadius) {
-            speed = 1;
+            collisionRadius = _collisionRadius;
+            speed = _speed;
+            HitPoints = _HitPoints;
         }
 
         public void setSpeed(double _speed)
@@ -33,26 +35,46 @@ namespace probably_meme.Objects
         public override void move(Vector2 _point)
         {
             vector = GameStaff.countUnitVector(_point, coordinates);
-            vector.X *= speed;
-            vector.Y *= speed;
+            vector.X *= (float)speed;
+            vector.Y *= (float)speed;
 
             coordinates.X += vector.X;
             coordinates.Y += vector.Y;
         }
 
-        void setHitPoints(double _hp)
+        public void setHitPoints(double _hp)
         {
             HitPoints = _hp;
         }
 
-        double attack()
+        public double attack()
         {
             return (damage);
         }
 
-        bool live()
+        public void take_damage(double _dmg)
         {
-            return (HitPoints <= 0);
+            HitPoints -= _dmg;
+        }
+
+        public double getHp()
+        {
+            return HitPoints;
+        }
+
+        public bool isLive()
+        {
+            return (HitPoints > 0);
+        }
+
+        public Vector2 getPosition()
+        {
+            return coordinates;
+        }
+        
+        public double getCollisionRadius()
+        {
+            return collisionRadius;
         }
     }
 }

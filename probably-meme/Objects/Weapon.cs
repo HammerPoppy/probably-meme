@@ -15,8 +15,10 @@ namespace probably_meme.Objects
         private Texture2D bulletsTexture;
         private float bulletsSpeed;
         private int framesFromLastAttack = 0;
+        private int attackCooldown = 10;
         private Vector2 origin;
         double rotationAngle;
+        
 
         public Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _bulletsSpeed)
             : base(_vector, _damage, _texture, _collisionRadius) {

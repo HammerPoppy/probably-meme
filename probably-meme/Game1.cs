@@ -121,7 +121,18 @@ namespace probably_meme
         {
             if (GameOver)
             {
-                //рср пхяси цеилнбеп
+                spriteBatch.Begin();
+                spriteBatch.Draw(HBFrame, new Rectangle(100, 175, HBFrame.Width, HBFrame.Height), Color.White);
+                spriteBatch.Draw(HBRed, new Rectangle(100, 175, (int)(HBRed.Width * (player.hitPoints / 20)), HBFrame.Height),
+                    new Rectangle(0, 0, (int)(HBRed.Width * (int)(player.hitPoints / 20)), HBRed.Height), Color.White);
+
+                String gameOver = "               GAME OVER\npress ENTER to quit";
+                Vector2 size = spriteFont.MeasureString(gameOver);
+                Vector2 origin = size * 0.5f;
+                spriteBatch.DrawString(spriteFont, gameOver, new Vector2((1920 - size.X) / 2 + 2, (1080 - size.Y) / 2 + 5), Color.Black, 0, origin, 1, SpriteEffects.None, 0);
+                spriteBatch.DrawString(spriteFont, gameOver, new Vector2((1920 - size.X) / 2, (1080 - size.Y) / 2), Color.Red, 0, origin, 1, SpriteEffects.None, 0);
+                spriteBatch.End();
+
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                     Exit();
             }
@@ -147,7 +158,8 @@ namespace probably_meme
                 spriteBatch.DrawString(spriteFont, time, new Vector2(102, 105), Color.Black);
                 spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.Red);
                 spriteBatch.Draw(HBFrame, new Rectangle(100, 175, HBFrame.Width, HBFrame.Height), Color.White);
-                spriteBatch.Draw(HBRed, new Rectangle(100, 175, (int)(HBRed.Width * (player.hitPoints / 20)), HBFrame.Height), new Rectangle(0, 0, (int)(HBRed.Width * (player.hitPoints / 20)), HBRed.Height), Color.White);
+                spriteBatch.Draw(HBRed, new Rectangle(100, 175, (int)(HBRed.Width * (player.hitPoints / 20)), HBFrame.Height),
+                    new Rectangle(0, 0, (int)(HBRed.Width * (player.hitPoints / 20)), HBRed.Height), Color.White);
                 spriteBatch.End();
             }
             base.Draw(gameTime);

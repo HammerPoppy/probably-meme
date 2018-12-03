@@ -40,7 +40,7 @@ namespace probably_meme
             // TODO: Add your initialization logic here
             playerTexture = Content.Load<Texture2D>("player 2v2");
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
-                GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerTexture, 15);
+                GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerTexture, 100, 20);
             player.setSpeed(2.0);
             enemyTexture = Content.Load<Texture2D>("enemy");
             enemies = new List<Enemy>();
@@ -106,7 +106,8 @@ namespace probably_meme
             }
                 
             player.weapon.move();
-            
+            if (!player.isLive())
+                Exit();
             base.Update(gameTime);
         }
 

@@ -13,21 +13,17 @@ namespace probably_meme.Objects
 
         enum AnimationStates
         {
-            Vertical,
-            Left,
-            Right,
+            Going,
             Standing
         }
         AnimationStates states;
 
-        AnimatedSprite goingVertical, goingLeft, goingRight;
+        AnimatedSprite going;
 
-        public Player(Vector2 _vector, double _damage, Texture2D textureLeft, Texture2D textureVert, Texture2D textureStanding, double _collisionRadius)
-             : base(_vector, _damage, textureStanding, _collisionRadius)
+        public Player(Vector2 _vector, double _damage, Texture2D texture, double _collisionRadius)
+             : base(_vector, _damage, texture, _collisionRadius)
         {
-            goingVertical = new AnimatedSprite(textureVert, 2, 2);
-            goingLeft = new AnimatedSprite(textureLeft, 2, 2);
-            goingRight = new AnimatedSprite(textureLeft, 2, 2);
+            going = new AnimatedSprite(texture, 3, 2);
             states = AnimationStates.Standing;
         }
 
@@ -39,53 +35,53 @@ namespace probably_meme.Objects
             {
                 coordinates.X -= (float)(speed / Math.Sqrt(2));
                 coordinates.Y -= (float)(speed / Math.Sqrt(2));
-                states = AnimationStates.Vertical;
                 weapon.changeCoordinates(new Vector2((float)(-speed / Math.Sqrt(2)), (float)(-speed / Math.Sqrt(2))));
+                states = AnimationStates.Going;
             }
             else if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.D))
             {
                 coordinates.X += (float)(speed / Math.Sqrt(2));
                 coordinates.Y -= (float)(speed / Math.Sqrt(2));
-                states = AnimationStates.Right;
                 weapon.changeCoordinates(new Vector2((float)(speed / Math.Sqrt(2)), (float)(-speed / Math.Sqrt(2))));
+                states = AnimationStates.Going;
             }
             else if (state.IsKeyDown(Keys.D) && state.IsKeyDown(Keys.S))
             {
                 coordinates.X += (float)(speed / Math.Sqrt(2));
                 coordinates.Y += (float)(speed / Math.Sqrt(2));
-                states = AnimationStates.Right;
                 weapon.changeCoordinates(new Vector2((float)(speed / Math.Sqrt(2)), (float)(speed / Math.Sqrt(2))));
+                states = AnimationStates.Going;
             }
             else if (state.IsKeyDown(Keys.S) && state.IsKeyDown(Keys.A))
             {
                 coordinates.X -= (float)(speed / Math.Sqrt(2));
                 coordinates.Y += (float)(speed / Math.Sqrt(2));
-                states = AnimationStates.Vertical;
                 weapon.changeCoordinates(new Vector2((float)(-speed / Math.Sqrt(2)), (float)(speed / Math.Sqrt(2))));
+                states = AnimationStates.Going;
             }
             else if (state.IsKeyDown(Keys.A))
             {
                 coordinates.X -= speed;
-                states = AnimationStates.Left;
+                states = AnimationStates.Going;
                 weapon.changeCoordinates(new Vector2((float)-speed, 0));
             }
             else if (state.IsKeyDown(Keys.D))
             {
                 coordinates.X += speed;
-                states = AnimationStates.Right;
                 weapon.changeCoordinates(new Vector2((float)speed, 0));
+                states = AnimationStates.Going;
             }
             else if (state.IsKeyDown(Keys.W))
             {
                 coordinates.Y -= speed;
-                states = AnimationStates.Vertical;
                 weapon.changeCoordinates(new Vector2(0, (float)-speed));
+                states = AnimationStates.Going;
             }
             else if (state.IsKeyDown(Keys.S))
             {
                 coordinates.Y += speed;
-                states = AnimationStates.Vertical;
                 weapon.changeCoordinates(new Vector2(0, (float)speed));
+                states = AnimationStates.Going;
             }
             /*MouseState state1 = Mouse.GetState();
             if(state1.LeftButton == ButtonState.Pressed)
@@ -110,30 +106,16 @@ namespace probably_meme.Objects
             //spriteBatch.Draw(texture, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height), Color.White);
             switch (states)
             {
-            case AnimationStates.Left:
-                goingLeft.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
+            case AnimationStates.Going:
+                going.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width / 2, texture.Height / 3),
                     Color.White, false);
-                goingLeft.Update();
-                break;
-                    
-            case AnimationStates.Right:
-                goingRight.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
-                    Color.White, true);
-                goingRight.Update();
-                break;
-
-            case AnimationStates.Vertical:
-                goingVertical.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
-                    Color.White, false);
-                goingVertical.Update();
+                going.Update();
                 break;
 
             case AnimationStates.Standing:
-                goingLeft.StopAnimation();
-                goingRight.StopAnimation();
-                goingVertical.StopAnimation();
-                goingLeft.Update();
-                goingLeft.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
+                going.StopAnimation();
+                going.Update();
+                going.Draw(spriteBatch, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width / 2, texture.Height / 3),
                         Color.White, false);
                 break;
             }

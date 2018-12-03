@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using probably_meme.Objects;
 using System;
@@ -48,10 +49,14 @@ namespace probably_meme
             enemySpeed = 1;
             weaponTexture = Content.Load<Texture2D>("ak-47");
             bulletTexture = Content.Load<Texture2D>("bullet 2");
-            player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)10.0));
+            SoundEffect[] shoots = new SoundEffect[3];
+            shoots[0] = Content.Load<SoundEffect>("shoot 1");
+            shoots[1] = Content.Load<SoundEffect>("shoot 2");
+            shoots[2] = Content.Load<SoundEffect>("shoot 3");
+            player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)4.0, shoots));
             player.weapon.changeBulletsTexture(bulletTexture);
             this.IsMouseVisible = true;
-            player.weapon.changeOrigin(new Vector2(-90, -50));
+            player.weapon.changeOrigin(new Vector2(50, 50));
             base.Initialize();
         }
         
@@ -119,8 +124,9 @@ namespace probably_meme
                 //    enemies.Remove(enemy);
             });
             player.weapon.draw(spriteBatch);
+            String time = gameTime.TotalGameTime.Minutes + ":" + gameTime.TotalGameTime.Seconds;
             spriteBatch.Begin();
-            spriteBatch.DrawString(spriteFont, GraphicsDevice.PresentationParameters.Bounds.Width.ToString(), new Vector2(100, 100), Color.Yellow);
+            spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.BlanchedAlmond);
             spriteBatch.End();
 
             base.Draw(gameTime);

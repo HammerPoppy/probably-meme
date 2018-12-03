@@ -42,14 +42,13 @@ namespace probably_meme
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
                 GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerTexture, 100, 20);
             player.setSpeed(2.0);
-            enemyTexture = Content.Load<Texture2D>("enemy");
             enemies = new List<Enemy>();
 
 
             ms = 2000;
             enemySpeed = 1;
             weaponTexture = Content.Load<Texture2D>("ak-47");
-            bulletTexture = Content.Load<Texture2D>("bullet 2");
+            bulletTexture = Content.Load<Texture2D>("bullet");
             SoundEffect[] shoots = new SoundEffect[3];
             shoots[0] = Content.Load<SoundEffect>("shoot 1");
             shoots[1] = Content.Load<SoundEffect>("shoot 2");

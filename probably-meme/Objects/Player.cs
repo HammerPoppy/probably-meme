@@ -9,7 +9,11 @@ namespace probably_meme.Objects
     {
         public Weapon weapon;
         private float speed;
-        private double hitPoints { get; set; }
+        public double hitPoints { get; set; }
+        private const int invincibleFrames = 300;
+        private int invincibleFramesLeft = 0;
+
+        
 
         enum AnimationStates
         {
@@ -134,13 +138,19 @@ namespace probably_meme.Objects
         {
             Vector2 enemyPosition = enemy.getPosition();
 
-            if ((enemyPosition.X + enemy.getCollisionRadius() >= coordinates.X) &&
+            if (invincibleFramesLeft > 0)
+            {
+                invincibleFramesLeft--;
+                return weapon.collision(enemy);
+            }
+            else if ((enemyPosition.X + enemy.getCollisionRadius() >= coordinates.X) &&
                     (enemyPosition.X <= coordinates.X) &&
                     (enemyPosition.Y + enemy.getCollisionRadius() >= coordinates.Y) &&
                     (enemyPosition.Y <= coordinates.Y))
             {
 
                 hitPoints -= enemy.attack();
+                invincibleFramesLeft = invincibleFrames;
             }
             return weapon.collision(enemy);
         }

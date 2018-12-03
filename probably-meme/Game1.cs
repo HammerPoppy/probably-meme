@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using probably_meme.Objects;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace probably_meme
         Texture2D enemyTexture;
         Texture2D enemyTexture1;
         int ms;
+        
         double enemySpeed;
         Player player;
         Enemy enemy;
@@ -47,6 +49,7 @@ namespace probably_meme
 
             ms = 2000;
             enemySpeed = 1;
+           
             weaponTexture = Content.Load<Texture2D>("ak-47");
             bulletTexture = Content.Load<Texture2D>("bullet");
             SoundEffect[] shoots = new SoundEffect[3];
@@ -95,18 +98,20 @@ namespace probably_meme
             {
                 Random random = new Random();
                 if (random.Next(0, 2) == 1)
-                    enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 4, enemyTexture, 100, 4, enemySpeed));
-                else
                     enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 2, enemyTexture1, 100, 1, enemySpeed));
+                else
+                    enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 4, enemyTexture, 100, 4, enemySpeed));
+                
                 if (ms - 50 > 300)
                     ms -= 50;
                 if (enemySpeed < 3)
                     enemySpeed += 0.1;
             }
-                
+            
             player.weapon.move();
-            if (!player.isLive())
+            if (!player.isLive() || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            
             base.Update(gameTime);
         }
 
@@ -124,6 +129,7 @@ namespace probably_meme
                 {
                     enemy.draw(spriteBatch);
                 }
+                
                     
                 //else
                 //    enemies.Remove(enemy);
@@ -131,6 +137,7 @@ namespace probably_meme
             player.weapon.draw(spriteBatch);
             String time = gameTime.TotalGameTime.Minutes + ":" + gameTime.TotalGameTime.Seconds;
             String health = player.hitPoints.ToString();
+           
             spriteBatch.Begin();
             spriteBatch.DrawString(spriteFont, time, new Vector2(102, 105), Color.Black);
             spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.Red);

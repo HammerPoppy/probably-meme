@@ -81,7 +81,7 @@ namespace probably_meme.Objects
             framesFromLastAttack++;
             if (framesFromLastAttack >= attackCooldown)
             {
-                bullets.Add(new Bullet(coordinates, damage, bulletsTexture, 0, 1));
+                bullets.Add(new Bullet(coordinates, damage, bulletsTexture, 0, bulletsSpeed));
                 framesFromLastAttack = 0;
             }
         }

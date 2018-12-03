@@ -45,7 +45,7 @@ namespace probably_meme
 
             weaponTexture = Content.Load<Texture2D>("ak-47");
             bulletTexture = Content.Load<Texture2D>("bullet");
-            player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)2.0));
+            player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)4.0));
             player.weapon.changeBulletsTexture(bulletTexture);
             this.IsMouseVisible = true;
             player.weapon.changeOrigin(new Vector2(-90, -50));

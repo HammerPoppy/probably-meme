@@ -23,6 +23,7 @@ namespace probably_meme.Objects
             coordinates = _vector;
             origin.X = 0;
             origin.Y = 0;
+            bullets = new List<Bullet>();
         }
 
         public void changeCoordinates(Vector2 point)
@@ -43,10 +44,14 @@ namespace probably_meme.Objects
             /*spriteBatch.Draw(texture, new Rectangle((int)(coordinates.X + origin.X), (int)(coordinates.Y + origin.Y), texture.Width, texture.Height), Color.White);*/
             //Draw(Texture, location, sourceRectangle, color,
             //      0, new Vector2(width / 2, height / 2), SpriteEffects.FlipHorizontally, 0);
+            
             Rectangle sourceRectangle = new Rectangle(0, 0, (int)texture.Width, (int)texture.Height);
             spriteBatch.Draw(texture, new Rectangle((int)(coordinates.X + origin.X), (int)(coordinates.Y + origin.Y), texture.Width, texture.Height),
                 new Rectangle(0, 0, texture.Width, texture.Height), Color.White, (float)(rotationAngle), origin, SpriteEffects.None, (float)0);
-            
+            bullets.ForEach(delegate (Bullet bullet)
+            {
+                spriteBatch.Draw(bulletsTexture, bullet.getPosition(), Color.White);
+            });
             spriteBatch.End();
         }
 
@@ -57,8 +62,14 @@ namespace probably_meme.Objects
             MouseState state = Mouse.GetState();
             Vector2 oldVector = vector;
             vector = GameStaff.countUnitVector(new Vector2(state.X, state.Y), 
-                new Vector2(coordinates.X + origin.X, coordinates.Y + origin.Y));
+                new Vector2(coordinates.X, coordinates.Y));
+
             rotationAngle = oldVector.X * vector.X + oldVector.Y * vector.Y;
+
+            bullets.ForEach(delegate (Bullet bullet)
+            {
+                bullet.move();
+            });
         }
 
         public void changeBulletsTexture(Texture2D _texture)

@@ -87,7 +87,12 @@ namespace probably_meme.Objects
                 states = AnimationStates.Vertical;
                 weapon.changeCoordinates(new Vector2(0, (float)speed));
             }
-            //weapon.move(_vector);
+            /*MouseState state1 = Mouse.GetState();
+            if(state1.LeftButton == ButtonState.Pressed)
+            {
+                weapon.attack();
+            }*/
+            attack();
         }
         
         public void setSpeed(double _speed)
@@ -138,8 +143,8 @@ namespace probably_meme.Objects
         public void attack()
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Space))
-                weapon.attack();
+                if (state.IsKeyDown(Keys.Space))
+                    weapon.attack();
         }
 
         public double collision(Enemy enemy)

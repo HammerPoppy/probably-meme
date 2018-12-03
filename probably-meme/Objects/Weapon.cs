@@ -14,23 +14,52 @@ namespace probably_meme.Objects
         private List<Bullet> bullets;
         private Texture2D bulletsTexture;
         private float bulletsSpeed;
+        private Vector2 origin;
+        double rotationAngle;
 
-        Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _bulletsSpeed)
+        public Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _bulletsSpeed)
             : base(_vector, _damage, _texture, _collisionRadius) {
             bulletsSpeed = _bulletsSpeed;
+            coordinates = _vector;
+            origin.X = 0;
+            origin.Y = 0;
+        }
+
+        public void changeCoordinates(Vector2 point)
+        {
+            coordinates.X += point.X;
+            coordinates.Y += point.Y;
+        }
+
+        public void changeOrigin(Vector2 point)
+        {
+            origin.X = point.X;
+            origin.Y = point.Y;
         }
 
         public override void draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Begin();
+            /*spriteBatch.Draw(texture, new Rectangle((int)(coordinates.X + origin.X), (int)(coordinates.Y + origin.Y), texture.Width, texture.Height), Color.White);*/
+            //Draw(Texture, location, sourceRectangle, color,
+            //      0, new Vector2(width / 2, height / 2), SpriteEffects.FlipHorizontally, 0);
+            Rectangle sourceRectangle = new Rectangle(0, 0, (int)texture.Width, (int)texture.Height);
+            spriteBatch.Draw(texture, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height),
+                new Rectangle(0, 0, texture.Width, texture.Height), Color.White, (float)rotationAngle, origin, SpriteEffects.None, (float)0);
+            
+            spriteBatch.End();
         }
 
         public override void move(Vector2 _mouse_coordinates) { }
 
-        public void move ()
+        public void move()
         {
             MouseState state = Mouse.GetState();
+            Vector2 oldVector = vector;
             vector = GameStaff.countUnitVector(new Vector2(state.X, state.Y), coordinates);
+            rotationAngle = ((float)(oldVector.X * vector.X) + (float)(oldVector.Y * vector.Y)) /
+                (Math.Sqrt((float)(oldVector.X * oldVector.X) + (float)(oldVector.Y * oldVector.Y))
+                * (Math.Sqrt((float)vector.X * vector.X + (float)(vector.Y * vector.Y))));
         }
 
         public void changeBulletsTexture(Texture2D _texture)

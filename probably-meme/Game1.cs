@@ -130,8 +130,8 @@ namespace probably_meme
                 String gameOver = "               GAME OVER\npress ENTER to quit";
                 Vector2 size = spriteFont.MeasureString(gameOver);
                 Vector2 origin = size * 0.5f;
-                spriteBatch.DrawString(GOFont, gameOver, new Vector2((1920) / 2 + 5, (1080) / 2 + 12), Color.Black, 0, origin, 1, SpriteEffects.None, 0);
-                spriteBatch.DrawString(GOFont, gameOver, new Vector2((1920) / 2, (1080) / 2), Color.Red, 0, origin, 1, SpriteEffects.None, 0);
+                spriteBatch.DrawString(GOFont, gameOver, new Vector2((1920 - size.X-280) / 2 + 5, (1080 - size.Y) / 2 + 12), Color.Black, 0, origin, 1, SpriteEffects.None, 0);
+                spriteBatch.DrawString(GOFont, gameOver, new Vector2((1920 - size.X-280) / 2, (1080 - size.Y) / 2), Color.Red, 0, origin, 1, SpriteEffects.None, 0);
                 spriteBatch.End();
 
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))

@@ -167,6 +167,8 @@ namespace probably_meme.Objects
 
         public bool isLive()
         {
+            if (hitPoints < 0)
+                hitPoints = 0;
             return (hitPoints > 0);
         }
     }

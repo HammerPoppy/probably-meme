@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using probably_meme.Objects;
 using System.Collections.Generic;
@@ -45,7 +46,11 @@ namespace probably_meme
 
             weaponTexture = Content.Load<Texture2D>("ak-47");
             bulletTexture = Content.Load<Texture2D>("bullet 2");
-            player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)4.0));
+            SoundEffect[] shoots = new SoundEffect[3];
+            shoots[0] = Content.Load<SoundEffect>("shoot 1");
+            shoots[1] = Content.Load<SoundEffect>("shoot 2");
+            shoots[2] = Content.Load<SoundEffect>("shoot 3");
+            player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)4.0, shoots));
             player.weapon.changeBulletsTexture(bulletTexture);
             this.IsMouseVisible = true;
             player.weapon.changeOrigin(new Vector2(50, 50));

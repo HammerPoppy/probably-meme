@@ -1,11 +1,9 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace probably_meme.Objects
 {
@@ -14,18 +12,20 @@ namespace probably_meme.Objects
         private List<Bullet> bullets;
         private Texture2D bulletsTexture;
         private float bulletsSpeed;
+        private SoundEffect[] shoot;
         private int framesFromLastAttack = 0;
-        private int attackCooldown = 10;
+        private int attackCooldown = 7;
         private Vector2 origin;
         double rotationAngle;
 
-        public Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _bulletsSpeed)
+        public Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _bulletsSpeed, SoundEffect[] shootSounds)
             : base(_vector, _damage, _texture, _collisionRadius) {
             bulletsSpeed = _bulletsSpeed;
             coordinates = _vector;
             origin.X = 0;
             origin.Y = 0;
             bullets = new List<Bullet>();
+            shoot = shootSounds;
         }
 
         public void changeCoordinates(Vector2 point)
@@ -62,7 +62,6 @@ namespace probably_meme.Objects
             vector = GameStaff.countUnitVector(new Vector2(state.X, state.Y), 
                 new Vector2(coordinates.X, coordinates.Y));
 
-            //rotationAngle = oldVector.X * vector.X + oldVector.Y * vector.Y;
             Vector2 direction = mousePosition - coordinates;
             rotationAngle = (float)Math.Atan2(direction.Y, direction.X);
 
@@ -79,9 +78,22 @@ namespace probably_meme.Objects
 
         public void attack()
         {
+            Random random = new Random();
             framesFromLastAttack++;
             if (framesFromLastAttack >= attackCooldown)
             {
+                switch (random.Next() % 3)
+                {
+                    case 0:
+                        shoot[0].Play();
+                        break;
+                    case 1:
+                        shoot[1].Play();
+                        break;
+                    case 2:
+                        shoot[2].Play();
+                        break;
+                }
                 bullets.Add(new Bullet(coordinates, damage, bulletsTexture, 0, bulletsSpeed));
                 framesFromLastAttack = 0;
             }

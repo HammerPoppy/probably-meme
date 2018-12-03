@@ -104,6 +104,24 @@
 /processorParam:TextureFormat=Color
 /build:pngpngpng.png-1.png;enemy.png
 
+#begin shoot 1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:shoot 1.wav
+
+#begin shoot 2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:shoot 2.wav
+
+#begin shoot 3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:shoot 3.wav
+
 #begin terrain.png
 /importer:TextureImporter
 /processor:TextureProcessor

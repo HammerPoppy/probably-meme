@@ -48,7 +48,8 @@ namespace probably_meme.Objects
                 new Rectangle(0, 0, texture.Width, texture.Height), Color.White, (float)(rotationAngle /*+ (Math.PI * 0.5f)*/), origin, SpriteEffects.None, (float)0);
             bullets.ForEach(delegate (Bullet bullet)
             {
-                spriteBatch.Draw(bulletsTexture, bullet.getPosition(), Color.White);
+                if (bullet.visibility)
+                    spriteBatch.Draw(bulletsTexture, bullet.getPosition(), Color.White);
             });
             spriteBatch.End();
         }
@@ -102,17 +103,21 @@ namespace probably_meme.Objects
         public double collision(Enemy enemy)
         {
             Vector2 bulletPosition;
+            Vector2 enemyPosition = enemy.getPosition();
             double _damage = 0;
             bullets.ForEach(delegate (Bullet bullet)
             {
                 bulletPosition = bullet.getPosition();
-                if ((coordinates.X + collisionRadius >= bulletPosition.X) &&
-                    (coordinates.X - collisionRadius <= bulletPosition.X) &&
-                    (coordinates.Y + collisionRadius >= bulletPosition.Y) &&
-                    (coordinates.Y - collisionRadius <= bulletPosition.Y))
+                
+                if ((enemyPosition.X + enemy.getCollisionRadius() >= bulletPosition.X) &&
+                    (enemyPosition.X  <= bulletPosition.X) &&
+                    (enemyPosition.Y + enemy.getCollisionRadius()  >= bulletPosition.Y) &&
+                    (enemyPosition.Y <= bulletPosition.Y))
                 {
-                    bullets.Remove(bullet);
-                    _damage += damage;
+                    
+                   if (bullet.visibility)
+                        _damage += damage;
+                    bullet.visibility = false;
                 }
             });
             return _damage;

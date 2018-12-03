@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using probably_meme.Objects;
+using System;
 using System.Collections.Generic;
 
 namespace probably_meme
@@ -79,11 +80,16 @@ namespace probably_meme
             enemies.ForEach(delegate (Enemy enemy) 
             {
                 enemy.move(player.getPosition());
-                //player.collision(enemy);
+                if (enemy.isLive())
+                    enemy.take_damage(player.collision(enemy));
+            });
+            enemies.ForEach(delegate (Enemy enemy)
+            {
+                //enemy.take_damage(player.collision(enemy));
             });
             enemyTexture = Content.Load<Texture2D>("enemy");
-            if (gameTime.TotalGameTime.TotalSeconds % 2 == 0)
-                enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 10, enemyTexture, 30));
+            if ((int)(gameTime.TotalGameTime.TotalSeconds % 10) == 0)
+                enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 2, enemyTexture, 100, 1));
             player.weapon.move();
             
             base.Update(gameTime);
@@ -97,7 +103,16 @@ namespace probably_meme
             spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
             spriteBatch.End();
             player.draw(spriteBatch);
-            enemies.ForEach(delegate (Enemy enemy) { enemy.draw(spriteBatch); });
+            enemies.ForEach(delegate (Enemy enemy) 
+            {
+                if (enemy.isLive())
+                {
+                    enemy.draw(spriteBatch);
+                }
+                    
+                //else
+                //    enemies.Remove(enemy);
+            });
             player.weapon.draw(spriteBatch);
             spriteBatch.Begin();
             spriteBatch.DrawString(spriteFont, GraphicsDevice.PresentationParameters.Bounds.Width.ToString(), new Vector2(100, 100), Color.Yellow);

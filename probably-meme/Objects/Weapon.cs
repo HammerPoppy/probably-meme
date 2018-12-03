@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -14,6 +14,7 @@ namespace probably_meme.Objects
         private List<Bullet> bullets;
         private Texture2D bulletsTexture;
         private float bulletsSpeed;
+        private int framesFromLastAttack = 0;
         private Vector2 origin;
         double rotationAngle;
 
@@ -41,11 +42,7 @@ namespace probably_meme.Objects
         public override void draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            /*spriteBatch.Draw(texture, new Rectangle((int)(coordinates.X + origin.X), (int)(coordinates.Y + origin.Y), texture.Width, texture.Height), Color.White);*/
-            //Draw(Texture, location, sourceRectangle, color,
-            //      0, new Vector2(width / 2, height / 2), SpriteEffects.FlipHorizontally, 0);
             
-            Rectangle sourceRectangle = new Rectangle(0, 0, (int)texture.Width, (int)texture.Height);
             spriteBatch.Draw(texture, new Rectangle((int)(coordinates.X + origin.X), (int)(coordinates.Y + origin.Y), texture.Width, texture.Height),
                 new Rectangle(0, 0, texture.Width, texture.Height), Color.White, (float)(rotationAngle), origin, SpriteEffects.None, (float)0);
             bullets.ForEach(delegate (Bullet bullet)
@@ -79,7 +76,12 @@ namespace probably_meme.Objects
 
         public void attack()
         {
-            bullets.Add(new Bullet(coordinates, damage, bulletsTexture, 0, 1));
+            framesFromLastAttack++;
+            if (framesFromLastAttack >= attackCooldown)
+            {
+                bullets.Add(new Bullet(coordinates, damage, bulletsTexture, 0, 1));
+                framesFromLastAttack = 0;
+            }
         }
 
         public double collision(Enemy enemy)

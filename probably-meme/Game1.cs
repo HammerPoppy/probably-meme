@@ -37,6 +37,7 @@ namespace probably_meme
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
                 GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerLeftTexture, playerVertTexture, playerStandTexture, 15);
             player.setSpeed(2.0);
+            player.changeWeapon(new Weapon(player.getPosition(), 2, playerStandTexture, 5, (float)2.0));
             base.Initialize();
         }
         

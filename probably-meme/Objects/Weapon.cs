@@ -14,10 +14,26 @@ namespace probably_meme.Objects
         private List<Bullet> bullets;
         private Texture2D bulletsTexture;
         private float bulletsSpeed;
+        private Vector2 origin;
 
-        Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _bulletsSpeed)
+        public Weapon(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _bulletsSpeed)
             : base(_vector, _damage, _texture, _collisionRadius) {
             bulletsSpeed = _bulletsSpeed;
+            coordinates = _vector;
+            origin.X = 0;
+            origin.Y = 0;
+        }
+
+        public void changeCoordinates(Vector2 point)
+        {
+            coordinates.X += point.X;
+            coordinates.Y += point.Y;
+        }
+
+        public void changeOrigin(Vector2 point)
+        {
+            origin.X = point.X;
+            origin.Y = point.Y;
         }
 
         public override void draw(SpriteBatch spriteBatch)
@@ -27,7 +43,7 @@ namespace probably_meme.Objects
 
         public override void move(Vector2 _mouse_coordinates) { }
 
-        public void move ()
+        public void move()
         {
             MouseState state = Mouse.GetState();
             vector = GameStaff.countUnitVector(new Vector2(state.X, state.Y), coordinates);

@@ -40,48 +40,56 @@ namespace probably_meme.Objects
                 coordinates.X -= (float)(speed / Math.Sqrt(2));
                 coordinates.Y -= (float)(speed / Math.Sqrt(2));
                 states = AnimationStates.Vertical;
+                weapon.changeCoordinates(new Vector2((float)(-speed / Math.Sqrt(2)), (float)(-speed / Math.Sqrt(2))));
             }
             else if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.D))
             {
                 coordinates.X += (float)(speed / Math.Sqrt(2));
                 coordinates.Y -= (float)(speed / Math.Sqrt(2));
-                states = AnimationStates.Vertical;
+                states = AnimationStates.Right;
+                weapon.changeCoordinates(new Vector2((float)(speed / Math.Sqrt(2)), (float)(-speed / Math.Sqrt(2))));
             }
             else if (state.IsKeyDown(Keys.D) && state.IsKeyDown(Keys.S))
             {
                 coordinates.X += (float)(speed / Math.Sqrt(2));
                 coordinates.Y += (float)(speed / Math.Sqrt(2));
-                states = AnimationStates.Vertical;
+                states = AnimationStates.Right;
+                weapon.changeCoordinates(new Vector2((float)(speed / Math.Sqrt(2)), (float)(speed / Math.Sqrt(2))));
             }
             else if (state.IsKeyDown(Keys.S) && state.IsKeyDown(Keys.A))
             {
                 coordinates.X -= (float)(speed / Math.Sqrt(2));
                 coordinates.Y += (float)(speed / Math.Sqrt(2));
                 states = AnimationStates.Vertical;
+                weapon.changeCoordinates(new Vector2((float)(-speed / Math.Sqrt(2)), (float)(speed / Math.Sqrt(2))));
             }
             else if (state.IsKeyDown(Keys.A))
             {
                 coordinates.X -= speed;
                 states = AnimationStates.Left;
+                weapon.changeCoordinates(new Vector2((float)-speed, 0));
             }
             else if (state.IsKeyDown(Keys.D))
             {
                 coordinates.X += speed;
                 states = AnimationStates.Right;
+                weapon.changeCoordinates(new Vector2((float)speed, 0));
             }
             else if (state.IsKeyDown(Keys.W))
             {
                 coordinates.Y -= speed;
                 states = AnimationStates.Vertical;
+                weapon.changeCoordinates(new Vector2(0, (float)-speed));
             }
             else if (state.IsKeyDown(Keys.S))
             {
                 coordinates.Y += speed;
                 states = AnimationStates.Vertical;
+                weapon.changeCoordinates(new Vector2(0, (float)speed));
             }
             //weapon.move(_vector);
         }
-
+        
         public void setSpeed(double _speed)
         {
             speed = (float)_speed;

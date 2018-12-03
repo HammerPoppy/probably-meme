@@ -10,14 +10,14 @@ namespace probably_meme
         SpriteBatch spriteBatch;
         SpriteFont spriteFont;
 
-        private AnimatedSprite animatedSprite;
-
         Texture2D background;
         Texture2D playerVertTexture;
         Texture2D playerLeftTexture;
         Texture2D playerStandTexture;
+        Texture2D enemyTexture;
 
         Player player;
+        Enemy enemy;
         
         public Game1()
         {
@@ -37,6 +37,10 @@ namespace probably_meme
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
                 GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerLeftTexture, playerVertTexture, playerStandTexture, 15);
             player.setSpeed(2.0);
+
+            enemyTexture = Content.Load<Texture2D>("enemy");
+            enemy = new Enemy(new Vector2(100, 150), 10, enemyTexture, 30);
+
             base.Initialize();
         }
         
@@ -59,6 +63,7 @@ namespace probably_meme
 
             // TODO: Add your update logic here
             player.move(new Vector2(0, 0));
+            enemy.move(player.getPosition());
             
 
             base.Update(gameTime);
@@ -72,6 +77,7 @@ namespace probably_meme
             spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
             spriteBatch.End();
             player.draw(spriteBatch);
+            enemy.draw(spriteBatch);
 
             spriteBatch.Begin();
             spriteBatch.DrawString(spriteFont, GraphicsDevice.PresentationParameters.Bounds.Width.ToString(), new Vector2(100, 100), Color.Yellow);

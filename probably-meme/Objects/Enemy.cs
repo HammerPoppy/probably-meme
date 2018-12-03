@@ -25,7 +25,9 @@ namespace probably_meme.Objects
 
         public override void draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Begin();
+            spriteBatch.Draw(texture, new Rectangle((int)coordinates.X, (int)coordinates.Y, texture.Width, texture.Height), Color.White);
+            spriteBatch.End();
         }
 
         public override void move(Vector2 _point)

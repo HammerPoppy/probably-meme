@@ -114,8 +114,9 @@ namespace probably_meme
                 //    enemies.Remove(enemy);
             });
             player.weapon.draw(spriteBatch);
+            String time = gameTime.TotalGameTime.Minutes + ":" + gameTime.TotalGameTime.Seconds;
             spriteBatch.Begin();
-            spriteBatch.DrawString(spriteFont, GraphicsDevice.PresentationParameters.Bounds.Width.ToString(), new Vector2(100, 100), Color.Yellow);
+            spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.BlanchedAlmond);
             spriteBatch.End();
 
             base.Draw(gameTime);

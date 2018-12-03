@@ -11,9 +11,11 @@ namespace probably_meme.Objects
 {
     class Bullet : AObject
     {
+        public bool visibility;
         public Bullet(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, float _speed)
             : base(_vector, _damage, _texture, _collisionRadius)
         {
+            visibility = true;
             MouseState state = Mouse.GetState();
             vector = GameStaff.countUnitVector(new Vector2(state.X, state.Y), coordinates);
             vector.X *= _speed;

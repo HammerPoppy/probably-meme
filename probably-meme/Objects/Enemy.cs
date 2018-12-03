@@ -13,9 +13,11 @@ namespace probably_meme.Objects
         double HitPoints;
         float speed;
 
-        public Enemy(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius)
+        public Enemy(Vector2 _vector, double _damage, Texture2D _texture, double _collisionRadius, double _HitPoints)
             : base(_vector, _damage, _texture, _collisionRadius) {
+            collisionRadius = _collisionRadius;
             speed = 1;
+            HitPoints = _HitPoints;
         }
 
         public void setSpeed(double _speed)
@@ -40,19 +42,39 @@ namespace probably_meme.Objects
             coordinates.Y += vector.Y;
         }
 
-        void setHitPoints(double _hp)
+        public void setHitPoints(double _hp)
         {
             HitPoints = _hp;
         }
 
-        double attack()
+        public double attack()
         {
             return (damage);
         }
 
-        bool live()
+        public void take_damage(double _dmg)
         {
-            return (HitPoints <= 0);
+            HitPoints -= _dmg;
+        }
+
+        public double getHp()
+        {
+            return HitPoints;
+        }
+
+        public bool isLive()
+        {
+            return (HitPoints > 0);
+        }
+
+        public Vector2 getPosition()
+        {
+            return coordinates;
+        }
+        
+        public double getCollisionRadius()
+        {
+            return collisionRadius;
         }
     }
 }

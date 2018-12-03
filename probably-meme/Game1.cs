@@ -18,7 +18,8 @@ namespace probably_meme
         Texture2D weaponTexture;
         Texture2D bulletTexture;
         Texture2D enemyTexture;
-
+        int ms;
+        double enemySpeed;
         Player player;
         Enemy enemy;
 
@@ -42,9 +43,10 @@ namespace probably_meme
             player.setSpeed(2.0);
             enemyTexture = Content.Load<Texture2D>("enemy");
             enemies = new List<Enemy>();
-            
 
 
+            ms = 2000;
+            enemySpeed = 1;
             weaponTexture = Content.Load<Texture2D>("ak-47");
             bulletTexture = Content.Load<Texture2D>("bullet 2");
             SoundEffect[] shoots = new SoundEffect[3];
@@ -88,8 +90,16 @@ namespace probably_meme
                 //enemy.take_damage(player.collision(enemy));
             });
             enemyTexture = Content.Load<Texture2D>("enemy");
-            if ((int)(gameTime.TotalGameTime.TotalSeconds % 10) == 0)
-                enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 2, enemyTexture, 100, 1));
+            
+            if ((int)(gameTime.TotalGameTime.TotalMilliseconds % ms) == 0)
+            {
+                enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 2, enemyTexture, 100, 1, enemySpeed));
+                if (ms - 50 > 500)
+                    ms -= 50;
+                if (enemySpeed < 3)
+                    enemySpeed += 0.1;
+            }
+                
             player.weapon.move();
             
             base.Update(gameTime);

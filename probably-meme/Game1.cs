@@ -23,7 +23,7 @@ namespace probably_meme
         Texture2D HBRed;
         Texture2D HBFrame;
         int ms;
-        
+        bool GameOver;
         double enemySpeed;
         Player player;
         Enemy enemy;
@@ -51,7 +51,7 @@ namespace probably_meme
 
             ms = 2000;
             enemySpeed = 1;
-           
+            GameOver = false;
             weaponTexture = Content.Load<Texture2D>("ak-47");
             bulletTexture = Content.Load<Texture2D>("bullet");
             SoundEffect[] shoots = new SoundEffect[3];
@@ -112,41 +112,44 @@ namespace probably_meme
             
             player.weapon.move();
             if (!player.isLive() || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                GameOver = true;
             
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
-            spriteBatch.End();
-            player.draw(spriteBatch);
-            enemies.ForEach(delegate (Enemy enemy) 
+            if (GameOver)
             {
-                if (enemy.isLive())
+                //рср пхяси цеилнбеп
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    Exit();
+            }
+            else
+            {
+                // TODO: Add your drawing code here
+                spriteBatch.Begin();
+                spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
+                spriteBatch.End();
+                player.draw(spriteBatch);
+                enemies.ForEach(delegate (Enemy enemy)
                 {
-                    enemy.draw(spriteBatch);
-                }
-                
-                    
-                //else
-                //    enemies.Remove(enemy);
-            });
-            player.weapon.draw(spriteBatch);
-            String time = gameTime.TotalGameTime.Minutes + ":" + gameTime.TotalGameTime.Seconds;
-            double health = player.hitPoints;
-           
-            spriteBatch.Begin();
-            spriteBatch.DrawString(spriteFont, time, new Vector2(102, 105), Color.Black);
-            spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.Red);
-            spriteBatch.Draw(HBFrame, new Rectangle(100, 175, HBFrame.Width, HBFrame.Height), Color.White);
-            spriteBatch.Draw(HBRed, new Rectangle(100, 175, (int)(HBRed.Width * (player.hitPoints / 20)), HBFrame.Height), new Rectangle(0, 0, (int)(HBRed.Width * (player.hitPoints / 20)), HBRed.Height), Color.White);
-            spriteBatch.End();
+                    if (enemy.isLive())
+                    {
+                        enemy.draw(spriteBatch);
+                    }
+                });
+                player.weapon.draw(spriteBatch);
+                String time = gameTime.TotalGameTime.Minutes + ":" + gameTime.TotalGameTime.Seconds;
+                double health = player.hitPoints;
 
+                spriteBatch.Begin();
+                spriteBatch.DrawString(spriteFont, time, new Vector2(102, 105), Color.Black);
+                spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.Red);
+                spriteBatch.Draw(HBFrame, new Rectangle(100, 175, HBFrame.Width, HBFrame.Height), Color.White);
+                spriteBatch.Draw(HBRed, new Rectangle(100, 175, (int)(HBRed.Width * (player.hitPoints / 20)), HBFrame.Height), new Rectangle(0, 0, (int)(HBRed.Width * (player.hitPoints / 20)), HBRed.Height), Color.White);
+                spriteBatch.End();
+            }
             base.Draw(gameTime);
         }
     }

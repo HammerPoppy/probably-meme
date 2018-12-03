@@ -19,5 +19,17 @@ namespace probably_meme.Objects
             vector.Y = vector.Y / ((float)Math.Sqrt(vector.X * vector.X) + (float)Math.Sqrt(vector.Y * vector.Y));
             return vector;
         }
+
+        public static Vector2 randomEnemyPosition()
+        {
+            Vector2 position;
+            int[] randomX = { 0, 1920 };
+            int[] randomY = { 0, 1080 }; 
+
+            position.X = 0;
+            position.Y = 0;
+
+            return position;
+        }
     }
 }

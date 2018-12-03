@@ -18,6 +18,7 @@ namespace probably_meme
         Texture2D weaponTexture;
         Texture2D bulletTexture;
         Texture2D enemyTexture;
+        Texture2D enemyTexture1;
         int ms;
         double enemySpeed;
         Player player;
@@ -53,7 +54,7 @@ namespace probably_meme
             shoots[0] = Content.Load<SoundEffect>("shoot 1");
             shoots[1] = Content.Load<SoundEffect>("shoot 2");
             shoots[2] = Content.Load<SoundEffect>("shoot 3");
-            player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)4.0, shoots));
+            player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)10.0, shoots));
             player.weapon.changeBulletsTexture(bulletTexture);
             this.IsMouseVisible = true;
             player.weapon.changeOrigin(new Vector2(50, 50));
@@ -90,11 +91,15 @@ namespace probably_meme
                 //enemy.take_damage(player.collision(enemy));
             });
             enemyTexture = Content.Load<Texture2D>("enemy");
-            
+            enemyTexture1 = Content.Load<Texture2D>("player");
             if ((int)(gameTime.TotalGameTime.TotalMilliseconds % ms) == 0)
             {
-                enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 2, enemyTexture, 100, 1, enemySpeed));
-                if (ms - 50 > 500)
+                Random random = new Random();
+                if (random.Next(0, 2) == 1)
+                    enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 4, enemyTexture, 100, 4, enemySpeed));
+                else
+                    enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 2, enemyTexture1, 100, 1, enemySpeed));
+                if (ms - 50 > 300)
                     ms -= 50;
                 if (enemySpeed < 3)
                     enemySpeed += 0.1;

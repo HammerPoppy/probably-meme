@@ -11,9 +11,7 @@ namespace probably_meme
         SpriteFont spriteFont;
 
         Texture2D background;
-        Texture2D playerVertTexture;
-        Texture2D playerLeftTexture;
-        Texture2D playerStandTexture;
+        Texture2D playerTexture;
         Texture2D enemyTexture;
 
         Player player;
@@ -31,11 +29,9 @@ namespace probably_meme
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            playerVertTexture = Content.Load<Texture2D>("player vertical");
-            playerLeftTexture = Content.Load<Texture2D>("player left");
-            playerStandTexture = Content.Load<Texture2D>("player");
+            playerTexture = Content.Load<Texture2D>("player 2");
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
-                GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerLeftTexture, playerVertTexture, playerStandTexture, 15);
+                GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerTexture, 15);
             player.setSpeed(2.0);
 
             enemyTexture = Content.Load<Texture2D>("enemy");

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using probably_meme.Objects;
+using System.Collections.Generic;
 
 namespace probably_meme
 {
@@ -20,7 +21,7 @@ namespace probably_meme
         Player player;
         Enemy enemy;
 
-        Weapon weapon;
+        List<Enemy> enemies;
         
         public Game1()
         {
@@ -40,16 +41,16 @@ namespace probably_meme
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
                 GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerLeftTexture, playerVertTexture, playerStandTexture, 15);
             player.setSpeed(2.0);
-
             enemyTexture = Content.Load<Texture2D>("enemy");
-            enemy = new Enemy(new Vector2(100, 150), 10, enemyTexture, 30);
+            enemies = new List<Enemy>();
+            
 
 
             weaponTexture = Content.Load<Texture2D>("ak-47");
             player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)2.0));
-            player.weapon.changeOrigin(new Vector2(-90, -50));
-
+            player.weapon.changeBulletsTexture(weaponTexture);
             this.IsMouseVisible = true;
+            player.weapon.changeOrigin(new Vector2(-90, -50));
             base.Initialize();
         }
         
@@ -72,10 +73,16 @@ namespace probably_meme
 
             // TODO: Add your update logic here
             player.move(new Vector2(0, 0));
-            enemy.move(player.getPosition());
-            
-
+            enemies.ForEach(delegate (Enemy enemy) 
+            {
+                enemy.move(player.getPosition());
+                //player.collision(enemy);
+            });
+            enemyTexture = Content.Load<Texture2D>("enemy");
+            if (gameTime.TotalGameTime.TotalSeconds % 2 == 0)
+                enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 10, enemyTexture, 30));
             player.weapon.move();
+            
             base.Update(gameTime);
         }
 
@@ -87,10 +94,8 @@ namespace probably_meme
             spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
             spriteBatch.End();
             player.draw(spriteBatch);
-            enemy.draw(spriteBatch);
+            enemies.ForEach(delegate (Enemy enemy) { enemy.draw(spriteBatch); });
             player.weapon.draw(spriteBatch);
-
-
             spriteBatch.Begin();
             spriteBatch.DrawString(spriteFont, GraphicsDevice.PresentationParameters.Bounds.Width.ToString(), new Vector2(100, 100), Color.Yellow);
             spriteBatch.End();

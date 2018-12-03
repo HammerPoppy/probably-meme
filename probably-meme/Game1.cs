@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using probably_meme.Objects;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,10 @@ namespace probably_meme
         Texture2D bulletTexture;
         Texture2D enemyTexture;
         Texture2D enemyTexture1;
+        Texture2D HBRed;
+        Texture2D HBFrame;
         int ms;
+        bool GameOver;
         double enemySpeed;
         Player player;
         Enemy enemy;
@@ -47,6 +51,7 @@ namespace probably_meme
 
             ms = 2000;
             enemySpeed = 1;
+            GameOver = false;
             weaponTexture = Content.Load<Texture2D>("ak-47");
             bulletTexture = Content.Load<Texture2D>("bullet");
             SoundEffect[] shoots = new SoundEffect[3];
@@ -65,8 +70,8 @@ namespace probably_meme
             spriteBatch = new SpriteBatch(GraphicsDevice);
             background = Content.Load<Texture2D>("terrain 2");
             spriteFont = Content.Load<SpriteFont>("Font");
-
-            // TODO: use this.Content to load your game content here
+            HBRed = Content.Load<Texture2D>("HBRed");
+            HBFrame = Content.Load<Texture2D>("HBFrame");
         }
 
         protected override void UnloadContent()
@@ -95,47 +100,69 @@ namespace probably_meme
             {
                 Random random = new Random();
                 if (random.Next(0, 2) == 1)
-                    enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 4, enemyTexture, 100, 4, enemySpeed));
-                else
                     enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 2, enemyTexture1, 100, 1, enemySpeed));
+                else
+                    enemies.Add(new Enemy(GameStaff.randomEnemyPosition(), 4, enemyTexture, 100, 4, enemySpeed));
+                
                 if (ms - 50 > 300)
                     ms -= 50;
                 if (enemySpeed < 3)
                     enemySpeed += 0.1;
             }
-                
+            
             player.weapon.move();
-            if (!player.isLive())
-                Exit();
+            if (!player.isLive() || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                GameOver = true;
+            
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
-            spriteBatch.End();
-            player.draw(spriteBatch);
-            enemies.ForEach(delegate (Enemy enemy) 
+            if (GameOver)
             {
-                if (enemy.isLive())
-                {
-                    enemy.draw(spriteBatch);
-                }
-                    
-                //else
-                //    enemies.Remove(enemy);
-            });
-            player.weapon.draw(spriteBatch);
-            String time = gameTime.TotalGameTime.Minutes + ":" + gameTime.TotalGameTime.Seconds;
-            String health = player.hitPoints.ToString();
-            spriteBatch.Begin();
-            spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.Black);
-            spriteBatch.DrawString(spriteFont, health, new Vector2(100, 150), Color.Black);
-            spriteBatch.End();
+                spriteBatch.Begin();
+                spriteBatch.Draw(HBFrame, new Rectangle(100, 175, HBFrame.Width, HBFrame.Height), Color.White);
+                spriteBatch.Draw(HBRed, new Rectangle(100, 175, (int)(HBRed.Width * (player.hitPoints / 20)), HBFrame.Height),
+                    new Rectangle(0, 0, (int)(HBRed.Width * (int)(player.hitPoints / 20)), HBRed.Height), Color.White);
 
+                SpriteFont GOFont = Content.Load<SpriteFont>("GOFont");
+                String gameOver = "               GAME OVER\npress ENTER to quit";
+                Vector2 size = spriteFont.MeasureString(gameOver);
+                Vector2 origin = size * 0.5f;
+                spriteBatch.DrawString(GOFont, gameOver, new Vector2((1920) / 2 + 5, (1080) / 2 + 12), Color.Black, 0, origin, 1, SpriteEffects.None, 0);
+                spriteBatch.DrawString(GOFont, gameOver, new Vector2((1920) / 2, (1080) / 2), Color.Red, 0, origin, 1, SpriteEffects.None, 0);
+                spriteBatch.End();
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    Exit();
+            }
+            else
+            {
+                // TODO: Add your drawing code here
+                spriteBatch.Begin();
+                spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
+                spriteBatch.End();
+                player.draw(spriteBatch);
+                enemies.ForEach(delegate (Enemy enemy)
+                {
+                    if (enemy.isLive())
+                    {
+                        enemy.draw(spriteBatch);
+                    }
+                });
+                player.weapon.draw(spriteBatch);
+                String time = gameTime.TotalGameTime.Minutes + ":" + gameTime.TotalGameTime.Seconds;
+                double health = player.hitPoints;
+
+                spriteBatch.Begin();
+                spriteBatch.DrawString(spriteFont, time, new Vector2(102, 105), Color.Black);
+                spriteBatch.DrawString(spriteFont, time, new Vector2(100, 100), Color.Red);
+                spriteBatch.Draw(HBFrame, new Rectangle(100, 175, HBFrame.Width, HBFrame.Height), Color.White);
+                spriteBatch.Draw(HBRed, new Rectangle(100, 175, (int)(HBRed.Width * (player.hitPoints / 20)), HBFrame.Height),
+                    new Rectangle(0, 0, (int)(HBRed.Width * (player.hitPoints / 20)), HBRed.Height), Color.White);
+                spriteBatch.End();
+            }
             base.Draw(gameTime);
         }
     }

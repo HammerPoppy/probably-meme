@@ -7,7 +7,7 @@ namespace probably_meme.Objects
 {
     class Player : AObject
     {
-        private Weapon weapon;
+        public Weapon weapon;
         private float speed;
         private double hitPoints { get; set; }
 

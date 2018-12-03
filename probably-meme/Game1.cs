@@ -16,8 +16,11 @@ namespace probably_meme
         Texture2D playerVertTexture;
         Texture2D playerLeftTexture;
         Texture2D playerStandTexture;
+        Texture2D weaponTexture;
 
         Player player;
+
+        Weapon weapon;
         
         public Game1()
         {
@@ -37,7 +40,11 @@ namespace probably_meme
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
                 GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerLeftTexture, playerVertTexture, playerStandTexture, 15);
             player.setSpeed(2.0);
-            player.changeWeapon(new Weapon(player.getPosition(), 2, playerStandTexture, 5, (float)2.0));
+
+            weaponTexture = Content.Load<Texture2D>("ak-47");
+            player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)2.0));
+            player.weapon.changeOrigin(new Vector2(-90, -50));
+
             base.Initialize();
         }
         
@@ -60,8 +67,7 @@ namespace probably_meme
 
             // TODO: Add your update logic here
             player.move(new Vector2(0, 0));
-            
-
+            player.weapon.move();
             base.Update(gameTime);
         }
 
@@ -73,6 +79,8 @@ namespace probably_meme
             spriteBatch.Draw(background, GraphicsDevice.PresentationParameters.Bounds, Color.White);
             spriteBatch.End();
             player.draw(spriteBatch);
+            player.weapon.draw(spriteBatch);
+
 
             spriteBatch.Begin();
             spriteBatch.DrawString(spriteFont, GraphicsDevice.PresentationParameters.Bounds.Width.ToString(), new Vector2(100, 100), Color.Yellow);

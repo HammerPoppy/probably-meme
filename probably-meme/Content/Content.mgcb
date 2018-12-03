@@ -20,6 +20,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
+#begin New Piskel-1.png.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:New Piskel-1.png.png;ak-47.png
+
 #begin player left.png
 /importer:TextureImporter
 /processor:TextureProcessor

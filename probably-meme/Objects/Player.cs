@@ -138,5 +138,10 @@ namespace probably_meme.Objects
         {
             return coordinates;
         }
+
+        public void getDamage(double _damage)
+        {
+            hitPoints -= _damage;
+        }
     }
 }

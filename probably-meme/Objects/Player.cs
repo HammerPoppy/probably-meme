@@ -23,7 +23,7 @@ namespace probably_meme.Objects
         public Player(Vector2 _vector, double _damage, Texture2D texture, double _collisionRadius)
              : base(_vector, _damage, texture, _collisionRadius)
         {
-            going = new AnimatedSprite(texture, 2, 2);
+            going = new AnimatedSprite(texture, 3, 2);
             states = AnimationStates.Standing;
         }
 

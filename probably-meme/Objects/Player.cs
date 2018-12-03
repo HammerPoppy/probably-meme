@@ -129,8 +129,8 @@ namespace probably_meme.Objects
 
         public void attack()
         {
-            KeyboardState state = Keyboard.GetState();
-                if (state.IsKeyDown(Keys.Space))
+            MouseState state = Mouse.GetState();
+                if (state.LeftButton == ButtonState.Pressed)
                     weapon.attack();
         }
 

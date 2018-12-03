@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using probably_meme.Objects;
 
@@ -49,6 +49,7 @@ namespace probably_meme
             player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)2.0));
             player.weapon.changeOrigin(new Vector2(-90, -50));
 
+            this.IsMouseVisible = true;
             base.Initialize();
         }
         

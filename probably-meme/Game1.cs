@@ -34,7 +34,7 @@ namespace probably_meme
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            playerTexture = Content.Load<Texture2D>("player 2");
+            playerTexture = Content.Load<Texture2D>("player 2v2");
             player = new Player(new Vector2(GraphicsDevice.PresentationParameters.Bounds.Width / 2,
                 GraphicsDevice.PresentationParameters.Bounds.Height / 2), 2, playerTexture, 15);
             player.setSpeed(2.0);
@@ -44,7 +44,7 @@ namespace probably_meme
 
 
             weaponTexture = Content.Load<Texture2D>("ak-47");
-            bulletTexture = Content.Load<Texture2D>("bullet");
+            bulletTexture = Content.Load<Texture2D>("bullet 2");
             player.changeWeapon(new Weapon(player.getPosition(), 2, weaponTexture, 5, (float)4.0));
             player.weapon.changeBulletsTexture(bulletTexture);
             this.IsMouseVisible = true;

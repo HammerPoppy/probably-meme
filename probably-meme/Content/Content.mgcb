@@ -44,6 +44,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
+#begin GOFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:GOFont.spritefont
+
 #begin HBFrame.png
 /importer:TextureImporter
 /processor:TextureProcessor

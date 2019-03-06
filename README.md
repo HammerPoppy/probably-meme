@@ -19,3 +19,6 @@
   1. Установить [Monogame для Visual Studio 2017](https://github.com/MonoGame/MonoGame/releases/download/v3.7/MonoGameSetup.exe).
   2. Установить шрифт [KREMLIN](https://www.dafont.com/kremlin.font).
   3. Склонить проект и скомпилить его.
+
+
+![2019-3-6_17-53-19 890](https://user-images.githubusercontent.com/13766687/53894447-cc36cb00-4038-11e9-8abf-156aff548197.jpg)

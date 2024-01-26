@@ -1,5 +1,7 @@
 <b>PROBABLY-MEME</b>
 
+https://github.com/enriquenc, https://github.com/SaintJakuzi и https://github.com/kvdex, чтобы их не отчислили за несданые лабы, модули и пропущенные лекции с ООП, за 24 часа сделали игру на С# + Microsoft XNA Framework.
+
 Управление:
 	Движение игрока: W, A, S, D.
 	Стрельба: ЛКМ
